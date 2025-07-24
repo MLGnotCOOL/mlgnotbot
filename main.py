@@ -19,6 +19,10 @@ public_key = "62337db9c45d967aad2ea3b2594bfba7f18e1b43687c505034db8533585a247f"
 
 bot = commands.Bot(command_prefix="/", intents=intents)
 
+gay_list = [
+    "summeryou7101",
+];
+
 @bot.event
 async def on_ready():
     print(f"MLGnotBot is ready to go!")
@@ -36,16 +40,31 @@ async def hello(ctx):
 
 @bot.slash_command(name="roll_a_dice", description="roll a dice!")
 async def roll_a_dice(ctx, face):
-    if face.isnumeric():
-        num = str(random.randint(1, int(face)))
-        await ctx.respond(f"You Rolled a {num}!")
+    if face.isdecimal():
+        if int(face) < 1:
+            await ctx.respond(f"bro i need a number bigger than 1")
+        else:
+            num = str(random.randint(1, int(face)))
+            await ctx.respond(f"You Rolled a {num}!")
     else:
         await ctx.respond(f"bro u need to input a number...")
 
 
 @bot.slash_command(name="gay_test", description="definitely a normal test!")
-async def gay_test(ctx, testusr):
-    await ctx.respond(f"user: {testusr}")
+async def gay_test(ctx, member: discord.Member):
+    gay_meter = 0
+    if (member.name in gay_list):
+        gay_meter = random.randint(50, 100)
+    else:
+        gay_meter = random.randint(0, 100)
+    
+    embed = discord.Embed(
+        title = f"Is {member.nick or member.global_name or member.name} gay?",
+        description=f"{member.nick or member.global_name or member.name} is {gay_meter}% gay!",
+    )
+    embed.set_thumbnail(url=member.display_avatar)
+
+    await ctx.respond(embed=embed)
 
 
 bot.run(TOKEN)
