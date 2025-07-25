@@ -167,8 +167,11 @@ async def enchant_roller(ctx):
 @bot.slash_command(name="add_role", description="adds a role to a person!")
 async def add_role(ctx, member: discord.Member, role: discord.Role):
     try:
-        await member.add_roles(role, reason=None, atomic=True)
-        await ctx.respond(f"Successfully added {role.name} role to {member.nick or member.global_name or member.name}!")
+        if ctx.author.guild_permissions.manage_roles:
+            await member.add_roles(role, reason=None, atomic=True)
+            await ctx.respond(f"Successfully added {role.name} role to {member.nick or member.global_name or member.name}!")
+        else:
+            await ctx.respond(f"You don't have the permission to do so")
     except:
         await ctx.respond(f"Failed to add role (might be because of the permissions)")
     
@@ -176,10 +179,14 @@ async def add_role(ctx, member: discord.Member, role: discord.Role):
 @bot.slash_command(name="remove_role", description="removes a role from a person!")
 async def remove_role(ctx, member: discord.Member, role: discord.Role):
     try:
-        await member.remove_roles(role, reason=None, atomic=True)
-        await ctx.respond(f"Successfully removed {role.name} role from {member.nick or member.global_name or member.name}!")
+        if ctx.author.guild_permissions.manage_roles:
+            await member.remove_roles(role, reason=None, atomic=True)
+            await ctx.respond(f"Successfully removed {role.name} role from {member.nick or member.global_name or member.name}!")
+        else:
+            await ctx.respond(f"You don't have the permission to do so")
     except:
         await ctx.respond(f"Failed to remove role (might be because of the permissions)")
+
 
 bot.add_cog(music_cog(bot))
 bot.run(TOKEN)
