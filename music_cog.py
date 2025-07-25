@@ -155,6 +155,7 @@ class music_cog(commands.Cog):
         self.is_playing = False
         self.is_paused = False
         await self.vc.disconnect()
+        await ctx.respond("stoped the songs!")
 
 
     @commands.slash_command(name="remove", description="removes the last song in the queue!")
