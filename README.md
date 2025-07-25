@@ -18,8 +18,8 @@ pip install yt_dlp
 pip install asyncio
 ```
 * install ffmpeg: go search it urself
-then change the "main_file_path" in main.py to your path
-and also change the "ffmpeg_path" in music_cog.py to your path
+* then change the "main_file_path" in main.py to your path
+* and also change the "ffmpeg_path" in music_cog.py to your path
 
 ---
 
