@@ -7,6 +7,8 @@ from discord.ext import commands
 import asyncio
 import yt_dlp as YoutubeDL
 
+ffmpeg_path="C:/Program Files (x86)/ffmpeg/bin/ffmpeg.exe"
+
 class music_cog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -41,7 +43,7 @@ class music_cog(commands.Cog):
             loop = asyncio.get_event_loop()
             data = await loop.run_in_executor(None, lambda: self.ytdl.extract_info(m_url, download=False))
             song = data['url']
-            self.vc.play(discord.FFmpegPCMAudio(song, executable= "C:/Program Files (x86)/ffmpeg/bin/ffmpeg.exe", **self.FFMPEG_OPTIONS), after=lambda e: asyncio.run_coroutine_threadsafe(self.play_next(), self.bot.loop))
+            self.vc.play(discord.FFmpegPCMAudio(song, executable= ffmpeg_path, **self.FFMPEG_OPTIONS), after=lambda e: asyncio.run_coroutine_threadsafe(self.play_next(), self.bot.loop))
         else:
             self.is_playing = False
 
@@ -66,7 +68,7 @@ class music_cog(commands.Cog):
             loop = asyncio.get_event_loop()
             data = await loop.run_in_executor(None, lambda: self.ytdl.extract_info(m_url, download=False))
             song = data['url']
-            self.vc.play(discord.FFmpegPCMAudio(song, executable= "C:/Program Files (x86)/ffmpeg/bin/ffmpeg.exe", **self.FFMPEG_OPTIONS), after=lambda e: asyncio.run_coroutine_threadsafe(self.play_next(), self.bot.loop))
+            self.vc.play(discord.FFmpegPCMAudio(song, executable= ffmpeg_path, **self.FFMPEG_OPTIONS), after=lambda e: asyncio.run_coroutine_threadsafe(self.play_next(), self.bot.loop))
         else:
             self.is_playing = False
 

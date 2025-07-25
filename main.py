@@ -11,6 +11,8 @@ from music_cog import music_cog
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
+main_file_path="D:/desktop/python files/programs/mlgnotbot"
+
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
@@ -153,7 +155,7 @@ async def enchant_roller(ctx):
             all_enchants += f"{key} {value}\n"
             
     #show the item and enchants
-    file = discord.File(f"./images/{items[pick_item][pick_item_type]}.png")
+    file = discord.File(f"{main_file_path}/images/{items[pick_item][pick_item_type]}.png")
 
     embed = discord.Embed(
         title = f"you rolled a {items[pick_item][pick_item_type].replace("_", " ")}!",
